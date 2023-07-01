@@ -12,10 +12,9 @@ int main(int argc, char** argv)
         bst.add_node(10);
         bst.add_node(50);
         bst.add_node(53);
-        bst.add_node(15);
-        bst.add_node(7);
 
-        std::cout<<bst<<std::endl;
+        bst.add_node(50);
+        std::cout << bst << std::endl;
     } else {
         ::testing::InitGoogleTest(&argc, argv);
         std::cout << "RUNNING TESTS ..." << std::endl;

@@ -84,6 +84,7 @@ TEST(HW3Test, TEST7) {
     bst.add_node(10);
     bst.add_node(20);
     bst.add_node(5);
+    std::cout<<bst<<std::endl;
     EXPECT_EQ(bst.get_root()->value, 10);
     EXPECT_EQ(bst.get_root()->left->value, 5);
     EXPECT_EQ(bst.get_root()->right->value, 20);
@@ -104,7 +105,7 @@ TEST(HW3Test, TEST8) {
     EXPECT_EQ(bst.get_root()->left->right->value, 15);
     EXPECT_EQ(bst.get_root()->right->right->value, 53);
 }
-/*
+
 TEST(HW3Test, TEST9) {
     BST bst{};
     bst.add_node(25);
@@ -192,7 +193,7 @@ TEST(HW3Test, TEST14) {
     EXPECT_EQ((*node)->left->value, 7);
     EXPECT_EQ((*node)->right->value, 15);
 }
-
+/*
 TEST(HW3Test, TEST15) {
     BST bst{};
     bst.add_node(25);
@@ -203,6 +204,8 @@ TEST(HW3Test, TEST15) {
     bst.add_node(7);
     bst.add_node(8);
     bst.add_node(9);
+
+    std::cout<<bst<<std::endl;
     
     BST::Node** node{bst.find_successor(10)};
     EXPECT_EQ((*node)->value, 9);
