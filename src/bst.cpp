@@ -198,23 +198,58 @@ BST::Node** BST::find_parrent(int value)
 }
 BST::Node** BST::find_successor(int value)
 {
-    static Node* result;
-    bool find = false;
-
-    bfs([value, &find](Node*& node) {
-        if (node->left != nullptr && node->left->value == value) {
-            result = node->left;
-            find = true;
-        }
-        if (node->right != nullptr && node->right->value == value) {
-            result = node->right;
-            find = true;
-        }
-    });
-    if (find) {
-        return &result;
-
-    } else {
+    auto pnode = find_node(value);
+    if (pnode == nullptr) {
         return nullptr;
     }
+    if ((*pnode)->left == nullptr) {
+        return nullptr;
+    }
+
+    *pnode = (*pnode)->left;
+    while ((*pnode)->right != nullptr) {
+        (*pnode) = (*pnode)->right;
+    }
+    return pnode;
+}
+
+bool BST::delete_node(int value)
+{
+    auto pnode = find_node(value);
+    if (pnode == nullptr) {
+        return false;
+    }
+    auto parent = find_parrent(value);
+
+    if((*pnode)->left==nullptr){
+        (*parent)->right = (*pnode)->right;
+        return true;
+    }
+    if((*pnode)->right==nullptr){
+        (*parent)->left = (*pnode)->left;
+        return true;
+    }
+    if (parent == nullptr) {
+        return false;
+    }
+
+    auto succ = find_successor(value);
+    if (succ == nullptr) {
+        if ((*parent)->right->value == value) {
+            (*parent)->right = nullptr;
+
+        } else {
+            (*parent)->left = nullptr;
+        }
+        return true;
+    }
+
+    auto succ_parent = find_parrent((*succ)->value);
+    (*pnode)->value = (*succ)->value;
+
+    if ((*succ)->left != nullptr) {
+        (*succ_parent)->right = (*succ)->left;
+    }
+
+    return true;
 }
