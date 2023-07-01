@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv)
 {
-    if (true) // make false to run unit-tests
+    if (false) // make false to run unit-tests
     {
         // debug section
         BST bst {};
@@ -14,15 +14,15 @@ int main(int argc, char** argv)
         std::cout<<*bst.get_root()<<" :root =="<<std::endl;
 
         std::cout<<"bst init: "<<bst<<std::endl;
-        
+
         std::cout<<"10==="<<std::endl;
         bst.add_node(10);
 
         // std::cout<<"after 10==="<<std::endl;
         // std::cout<<*bst.get_root()<<" :root =="<<std::endl;
 
-        // std::cout<<"20==="<<std::endl;
-        // bst.add_node(20);
+        std::cout<<"20==="<<std::endl;
+        bst.add_node(20);
 
         // std::cout<<"after 20==="<<std::endl;
         // std::cout<<*bst.get_root()<<"=="<<std::endl;

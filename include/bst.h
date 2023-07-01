@@ -27,7 +27,7 @@ public:
 
     BST()
     {
-        root = new Node();
+        root = nullptr;
     }
 
     BST(BST& bst)

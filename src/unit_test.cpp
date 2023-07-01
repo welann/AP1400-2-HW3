@@ -82,11 +82,11 @@ TEST(HW3Test, TEST6) {
 TEST(HW3Test, TEST7) {
     BST bst{};
     bst.add_node(10);
-    // bst.add_node(20);
-    // bst.add_node(5);
-    // EXPECT_EQ(bst.get_root()->value, 10);
-    // EXPECT_EQ(bst.get_root()->left->value, 5);
-    // EXPECT_EQ(bst.get_root()->right->value, 20);
+    bst.add_node(20);
+    bst.add_node(5);
+    EXPECT_EQ(bst.get_root()->value, 10);
+    EXPECT_EQ(bst.get_root()->left->value, 5);
+    EXPECT_EQ(bst.get_root()->right->value, 20);
 }
 /*
 TEST(HW3Test, TEST8) {

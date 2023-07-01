@@ -80,7 +80,7 @@ void BST::bfs(std::function<void(Node*& node)> func)
         std::cout << "empty node" << std::endl;
         func(root);
         std::cout << "after empty node" << std::endl;
-        std::cout << *get_root() << std::endl;
+        // std::cout << *get_root() << std::endl;
 
         return;
     }
@@ -94,10 +94,6 @@ void BST::bfs(std::function<void(Node*& node)> func)
         que.pop();
         func(temp);
 
-        std::cout << "bfs: " << std::endl;
-        // auto a = temp->left;
-        std::cout << temp->left << " ==left" << std::endl;
-        std::cout << temp->right << " ==right" << std::endl;
 
         if (temp->left != nullptr) {
             std::cout << temp->left << "==new left" << std::endl;
@@ -187,6 +183,20 @@ bool BST::add_node(int value)
         // int value = 10;
         std::cout << "add node: " << std::endl;
 
+        if (node == nullptr || node->value == 0) {
+            // BST::Node* temp = 
+            node = new BST::Node(value, nullptr, nullptr);
+            std::cout << "consruction==" << std::endl;
+            std::cout << *node << std::endl;
+            return;
+        }
+        if (node == nullptr || node->value == 0) {
+            // BST::Node* temp = 
+            node = new BST::Node(value, nullptr, nullptr);
+            std::cout << "consruction==" << std::endl;
+            std::cout << *node << std::endl;
+            return;
+        }
         // if (node == nullptr || node->value == 0) {
         //     BST::Node* temp = new BST::Node(value, nullptr, nullptr);
         //     node = temp;
@@ -194,19 +204,49 @@ bool BST::add_node(int value)
         //     std::cout << *node << std::endl;
         //     return;
         // }
+        if (node == nullptr || node->value == 0) {
+            // BST::Node* temp = 
+            node = new BST::Node(value, nullptr, nullptr);
+            std::cout << "consruction==" << std::endl;
+            std::cout << *node << std::endl;
+            return;
+        }
+        if (node == nullptr || node->value == 0) {
+            // BST::Node* temp = 
+            node = new BST::Node(value, nullptr, nullptr);
+            std::cout << "consruction==" << std::endl;
+            std::cout << *node << std::endl;
+            return;
+        }
         if (value > node->value && node->right == nullptr) {
+            //  temp();
+            //  temp();
             BST::Node temp(value, nullptr, nullptr);
+            //  temp();
+            //  temp();
 
+            node->right =new BST::Node(value, nullptr, nullptr);
+            node->right =new BST::Node(value, nullptr, nullptr);
             node->right = &temp;
+            node->right =new BST::Node(value, nullptr, nullptr);
+            node->right =new BST::Node(value, nullptr, nullptr);
 
             std::cout << "right==" << std::endl;
             std::cout << *node << std::endl;
             std::cout << *node->right << std::endl;
             // return;
         } else if (value < node->value && node->left == nullptr) {
+            // BST::Node temp(value, nullptr, nullptr);
+            // BST::Node temp(value, nullptr, nullptr);
             BST::Node temp(value, nullptr, nullptr);
+            // BST::Node temp(value, nullptr, nullptr);
+            // BST::Node temp(value, nullptr, nullptr);
 
+            node->left = new BST::Node(value, nullptr, nullptr);
+            node->left = new BST::Node(value, nullptr, nullptr);
             node->left = &temp;
+            node->left = new BST::Node(value, nullptr, nullptr);
+            node->left = new BST::Node(value, nullptr, nullptr);
 
             std::cout << "left==" << std::endl;
             std::cout << *node << std::endl;
