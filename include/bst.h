@@ -17,7 +17,7 @@ public:
         bool operator>=(int a) const;
         bool operator==(int a) const;
 
-        friend std::ostream& operator<<(std::ostream& os, const Node* n);
+        friend std::ostream& operator<<(std::ostream& os, const Node& n);
 
         int value;
         Node* left;

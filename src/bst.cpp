@@ -41,8 +41,25 @@ bool BST::Node::operator==(int a) const
     return value == a;
 }
 
-std::ostream& operator<<(std::ostream& os, const BST::Node* n)
+bool operator>(int a, BST::Node b){
+    return b<a;
+}
+bool operator>=(int a, BST::Node b){
+    return b<=a;
+}
+bool operator<(int a, BST::Node b){
+    return b>a;
+}
+bool operator<=(int a, BST::Node b){
+    return b>=a;
+}
+bool operator==(int a, BST::Node b){
+    return b==a;
+}
+
+
+std::ostream& operator<<(std::ostream& os, const BST::Node& n)
 {
-    os<<"value: "<<n->value<<" left: "<<n->left<<" right: "<<n->right<<std::endl;
+    os<<"value: "<<n.value<<" left: "<<n.left<<" right: "<<n.right<<std::endl;
     return os;
 }
