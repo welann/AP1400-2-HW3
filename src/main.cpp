@@ -2,39 +2,20 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-
 int main(int argc, char** argv)
 {
     if (false) // make false to run unit-tests
     {
         // debug section
         BST bst {};
- 
-        std::cout<<"befer 10==="<<std::endl;
-        std::cout<<*bst.get_root()<<" :root =="<<std::endl;
-
-        std::cout<<"bst init: "<<bst<<std::endl;
-
-        std::cout<<"10==="<<std::endl;
+        bst.add_node(25);
         bst.add_node(10);
+        bst.add_node(50);
+        bst.add_node(53);
+        bst.add_node(15);
+        bst.add_node(7);
 
-        // std::cout<<"after 10==="<<std::endl;
-        // std::cout<<*bst.get_root()<<" :root =="<<std::endl;
-
-        std::cout<<"20==="<<std::endl;
-        bst.add_node(20);
-
-        // std::cout<<"after 20==="<<std::endl;
-        // std::cout<<*bst.get_root()<<"=="<<std::endl;
-
-        // std::cout<<"30==="<<std::endl;
-        // bst.add_node(5);
-        
-        // std::cout<<"after 30==="<<std::endl;
-        // std::cout<<*bst.get_root()<<"=="<<std::endl;
-
-        // std::cout<<"size "<<bst.length()<<std::endl;
-
+        std::cout<<bst<<std::endl;
     } else {
         ::testing::InitGoogleTest(&argc, argv);
         std::cout << "RUNNING TESTS ..." << std::endl;

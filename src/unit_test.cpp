@@ -88,7 +88,7 @@ TEST(HW3Test, TEST7) {
     EXPECT_EQ(bst.get_root()->left->value, 5);
     EXPECT_EQ(bst.get_root()->right->value, 20);
 }
-/*
+
 TEST(HW3Test, TEST8) {
     BST bst{};
     bst.add_node(25);
@@ -98,12 +98,13 @@ TEST(HW3Test, TEST8) {
     bst.add_node(15);
     bst.add_node(7);
 
+    std::cout<<bst<<std::endl;
     EXPECT_FALSE(bst.add_node(53));
     EXPECT_EQ(bst.get_root()->left->left->value, 7);
     EXPECT_EQ(bst.get_root()->left->right->value, 15);
     EXPECT_EQ(bst.get_root()->right->right->value, 53);
 }
-
+/*
 TEST(HW3Test, TEST9) {
     BST bst{};
     bst.add_node(25);
