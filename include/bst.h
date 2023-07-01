@@ -2,12 +2,13 @@
 #define BST_H
 #include <functional>
 #include <iostream>
+#include <queue>
 
 class BST {
 public:
     class Node {
     public:
-        Node(int value, Node* left, Node* right);
+        Node(int value, Node* left=nullptr, Node* right=nullptr);
         Node();
         Node(const Node& node);
 
@@ -23,6 +24,35 @@ public:
         Node* left;
         Node* right;
     };
+
+    BST()
+    {
+        root = new Node();
+    }
+
+    BST(BST& bst)
+    {
+        root = bst.root;
+    }
+
+    BST(BST&& bst)
+    {
+        root=std::move(bst.root);
+    }
+
+    ~BST()
+    {
+        std::vector<Node*> nodes;
+        bfs([&nodes](BST::Node*& node) { nodes.push_back(node); });
+        for (auto& node : nodes)
+            delete node;
+    }
+
+    void operator++();
+    void operator=(BST &bts);
+    void operator=(BST &&bts);
+
+    friend std::ostream& operator<<(std::ostream& os,  BST& bst);
 
     Node*& get_root();
     void bfs(std::function<void(Node*& node)> func);
