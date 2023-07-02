@@ -65,6 +65,49 @@ bool operator==(int a, BST::Node b)
     return b == a;
 }
 
+BST& BST::operator++(){
+    bfs([](BST::Node*& node){
+        node->value++;
+    });
+    std::cout<<*this<<std::endl;
+    return *this;
+}
+
+BST& BST::operator++(int a){
+    static BST temp{*this};
+
+    bfs([](BST::Node*& node){
+        node->value++;
+    });
+
+    return temp;
+}
+
+BST& BST::operator=(BST& bst)
+{
+    if (get_root() == bst.get_root()) {
+        return *this;
+    }
+
+    std::vector<int> nodes;
+    bst.bfs([&nodes](BST::Node*& node) {
+        nodes.push_back(node->value);
+    });
+
+    for (auto node : nodes) {
+        add_node(node);
+    }
+    return *this;
+}
+
+BST&& BST::operator=(BST&& bst)
+{
+    root = bst.root;
+    bst.root = nullptr;
+
+    return std::move(*this);
+}
+
 std::ostream& operator<<(std::ostream& os, const BST::Node& n)
 {
     os << &n << " value: " << n.value << " left: " << n.left << " right: " << n.right << std::endl;
@@ -158,7 +201,8 @@ bool BST::add_node(int value)
 
 BST::Node** BST::find_node(int value)
 {
-    static Node* result;
+    static Node* result = nullptr;
+
     bool find = false;
     bfs([value, &find](Node*& node) {
         if (node->value == value) {
@@ -176,21 +220,21 @@ BST::Node** BST::find_node(int value)
 
 BST::Node** BST::find_parrent(int value)
 {
-    static Node* result;
+    static Node* paremt_node = nullptr;
     bool find = false;
 
     bfs([value, &find](Node*& node) {
         if (node->left != nullptr && node->left->value == value) {
-            result = node;
+            paremt_node = node;
             find = true;
         }
         if (node->right != nullptr && node->right->value == value) {
-            result = node;
+            paremt_node = node;
             find = true;
         }
     });
     if (find) {
-        return &result;
+        return &paremt_node;
 
     } else {
         return nullptr;
@@ -198,19 +242,19 @@ BST::Node** BST::find_parrent(int value)
 }
 BST::Node** BST::find_successor(int value)
 {
-    auto pnode = find_node(value);
-    if (pnode == nullptr) {
+    auto succ_node = find_node(value);
+    if (succ_node == nullptr) {
         return nullptr;
     }
-    if ((*pnode)->left == nullptr) {
+    if ((*succ_node)->left == nullptr) {
         return nullptr;
     }
 
-    *pnode = (*pnode)->left;
-    while ((*pnode)->right != nullptr) {
-        (*pnode) = (*pnode)->right;
+    *succ_node = (*succ_node)->left;
+    while ((*succ_node)->right != nullptr) {
+        (*succ_node) = (*succ_node)->right;
     }
-    return pnode;
+    return succ_node;
 }
 
 bool BST::delete_node(int value)
@@ -219,36 +263,51 @@ bool BST::delete_node(int value)
     if (pnode == nullptr) {
         return false;
     }
-    auto parent = find_parrent(value);
+    Node* pnode_v = *pnode;
 
-    if((*pnode)->left==nullptr){
-        (*parent)->right = (*pnode)->right;
-        return true;
-    }
-    if((*pnode)->right==nullptr){
-        (*parent)->left = (*pnode)->left;
-        return true;
-    }
+    // std::cout << "find pnode  : " << (**pnode) << std::endl;
+    // std::cout << "find pnode_v  : " << (*pnode_v) << std::endl;
+
+    auto parent = find_parrent(value);
     if (parent == nullptr) {
-        return false;
+        // return false;
+        parent = &get_root();
+    }
+
+    Node* parent_v = *parent;
+
+    // 只存在单侧节点
+    if (pnode_v->left == nullptr) {
+        parent_v->right = pnode_v->right;
+        return true;
+    }
+    if (pnode_v->right == nullptr) {
+        parent_v->left = pnode_v->left;
+        return true;
     }
 
     auto succ = find_successor(value);
     if (succ == nullptr) {
-        if ((*parent)->right->value == value) {
-            (*parent)->right = nullptr;
+        if (parent_v->right->value == value) {
+            parent_v->right = pnode_v->right;
 
         } else {
-            (*parent)->left = nullptr;
+            parent_v->left = pnode_v->right;
         }
         return true;
     }
+    Node* succ_v = *succ;
 
-    auto succ_parent = find_parrent((*succ)->value);
-    (*pnode)->value = (*succ)->value;
+    auto succ_parent = find_parrent(succ_v->value);
 
-    if ((*succ)->left != nullptr) {
+    pnode_v->value = succ_v->value;
+    // std::cout << "find pnode  : " << (**pnode) << std::endl;
+    // std::cout << "find pnode_v  : " << (*pnode_v) << std::endl;
+
+    if (succ_v->left != nullptr) {
         (*succ_parent)->right = (*succ)->left;
+    } else {
+        (*succ_parent)->right = nullptr;
     }
 
     return true;

@@ -1,6 +1,7 @@
 #ifndef BST_H
 #define BST_H
 #include <functional>
+#include <initializer_list>
 #include <iostream>
 #include <queue>
 
@@ -8,7 +9,7 @@ class BST {
 public:
     class Node {
     public:
-        Node(int value, Node* left=nullptr, Node* right=nullptr);
+        Node(int value, Node* left = nullptr, Node* right = nullptr);
         Node();
         Node(const Node& node);
 
@@ -32,12 +33,32 @@ public:
 
     BST(BST& bst)
     {
-        root = bst.root;
+        root=nullptr;
+        add_node( bst.get_root()->value);
+        // root->value = bst.get_root()->value;
+        std::vector<int> nodes;
+        bst.bfs([&nodes](BST::Node*& node) {
+            nodes.push_back(node->value);
+        });
+
+        for (auto node : nodes) {
+            add_node(node);
+        }
     }
 
     BST(BST&& bst)
     {
-        root=std::move(bst.root);
+         
+        root = bst.root;
+        bst.root = nullptr;
+         
+    }
+
+    BST(std::initializer_list<int> nodes){
+        root = nullptr;
+        for(auto node:nodes){
+            add_node(node);
+        }
     }
 
     ~BST()
@@ -48,11 +69,12 @@ public:
             delete node;
     }
 
-    void operator++();
-    void operator=(BST &bts);
-    void operator=(BST &&bts);
+    BST& operator++();
+    BST& operator++(int a);
+    BST& operator=(BST& bts);
+    BST&& operator=(BST&& bts);
 
-    friend std::ostream& operator<<(std::ostream& os,  BST& bst);
+    friend std::ostream& operator<<(std::ostream& os, BST& bst);
 
     Node*& get_root();
     void bfs(std::function<void(Node*& node)> func);
