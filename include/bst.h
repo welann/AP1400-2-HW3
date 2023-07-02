@@ -35,7 +35,7 @@ public:
     {
         root=nullptr;
         add_node( bst.get_root()->value);
-        // root->value = bst.get_root()->value;
+
         std::vector<int> nodes;
         bst.bfs([&nodes](BST::Node*& node) {
             nodes.push_back(node->value);
@@ -48,10 +48,8 @@ public:
 
     BST(BST&& bst)
     {
-         
         root = bst.root;
         bst.root = nullptr;
-         
     }
 
     BST(std::initializer_list<int> nodes){

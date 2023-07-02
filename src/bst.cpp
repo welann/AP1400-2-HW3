@@ -240,6 +240,7 @@ BST::Node** BST::find_parrent(int value)
         return nullptr;
     }
 }
+
 BST::Node** BST::find_successor(int value)
 {
     auto succ_node = find_node(value);
@@ -265,12 +266,8 @@ bool BST::delete_node(int value)
     }
     Node* pnode_v = *pnode;
 
-    // std::cout << "find pnode  : " << (**pnode) << std::endl;
-    // std::cout << "find pnode_v  : " << (*pnode_v) << std::endl;
-
     auto parent = find_parrent(value);
     if (parent == nullptr) {
-        // return false;
         parent = &get_root();
     }
 
@@ -301,8 +298,6 @@ bool BST::delete_node(int value)
     auto succ_parent = find_parrent(succ_v->value);
 
     pnode_v->value = succ_v->value;
-    // std::cout << "find pnode  : " << (**pnode) << std::endl;
-    // std::cout << "find pnode_v  : " << (*pnode_v) << std::endl;
 
     if (succ_v->left != nullptr) {
         (*succ_parent)->right = (*succ)->left;
